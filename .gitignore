@@ -1,3 +1,15 @@
 .vs
-Client/obj
-Client/bin
+SwaggerClient/obj
+SwaggerClient/bin
+AbstractRepositories/obj
+AbstractRepositories/bin
+AbstractServices/obj
+AbstractServices/bin
+BLL/obj
+BLL/bin
+DatabaseDAL/obj
+DatabaseDAL/bin
+EntryPoint/obj
+EntryPoint/bin
+FilesDAL/obj
+FilesDAL/bin
