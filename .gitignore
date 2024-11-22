@@ -1,8 +1,8 @@
 .vs
 SwaggerClient/obj
 SwaggerClient/bin
-AbstractRepositories/obj
-AbstractRepositories/bin
+Domain/obj
+Domain/bin
 AbstractServices/obj
 AbstractServices/bin
 BLL/obj
