@@ -5,12 +5,12 @@ namespace DatabaseDAL
 {
     internal static class ModelMapper
     {
-        public static Store ToDomain(StoreEntity storeEntity)
+        internal static Store ToDomain(StoreEntity storeEntity)
         {
             return new Store(storeEntity.Id, storeEntity.Name, storeEntity.Address);
         }
 
-        public static StoreEntity ToEntity(Store store)
+        internal static StoreEntity ToEntity(Store store)
         {
             return new StoreEntity
             {
@@ -20,12 +20,12 @@ namespace DatabaseDAL
             };
         }
 
-        public static Product ToDomain(ProductEntity productEntity)
+        internal static Product ToDomain(ProductEntity productEntity)
         {
             return new Product(productEntity.Id, productEntity.Name);
         }
 
-        public static ProductEntity ToEntity(Product product)
+        internal static ProductEntity ToEntity(Product product)
         {
             return new ProductEntity
             {
@@ -34,7 +34,7 @@ namespace DatabaseDAL
             };
         }
 
-        public static Reserve ToDomain(ReserveEntity reserveEntity)
+        internal static Reserve ToDomain(ReserveEntity reserveEntity)
         {
             return new Reserve(
                 store: ToDomain(reserveEntity.Store),
@@ -44,7 +44,7 @@ namespace DatabaseDAL
             );
         }
 
-        public static ReserveEntity ToEntity(Reserve reserve)
+        internal static ReserveEntity ToEntity(Reserve reserve)
         {
             return new ReserveEntity
             {

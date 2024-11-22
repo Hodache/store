@@ -32,4 +32,10 @@ internal class ProductRepository : IProductRepository
         var productEntity = await _context.Products.FindAsync(id);
         return productEntity == null ? null : ModelMapper.ToDomain(productEntity);
     }
+
+    public async Task<Product?> GetProductByNameAsync(string name)
+    {
+        var productEntity = await _context.Products.FirstOrDefaultAsync(p => p.Name == name);
+        return productEntity == null ? null : ModelMapper.ToDomain(productEntity);
+    }
 }

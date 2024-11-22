@@ -47,6 +47,15 @@ internal class ReserveRepository : IReserveRepository
         return reserveEntities.Select(ModelMapper.ToDomain);
     }
 
+    public async Task<IEnumerable<Reserve>> GetReservesByProductIdAsync(int productId)
+    {
+        var reserveEntities = await _context.Reserves
+            .Where(r => r.ProductId == productId)
+            .ToListAsync();
+
+        return reserveEntities.Select(ModelMapper.ToDomain);
+    }
+
     public async Task UpdateReserveAsync(Reserve Reserve)
     {
         var reserveEntity = ModelMapper.ToEntity(Reserve);

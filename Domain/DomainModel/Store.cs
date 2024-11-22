@@ -1,8 +1,8 @@
 ﻿namespace Domain.DomainModel;
 
-public class Store(int id, string name, string address)
+public class Store(string name, string address)
 {
-    public int Id { get; } = id;
+    public int Id { get; }
     public string Name { get; } = name;
     public string Address { get; } = address;
 }
