@@ -1,6 +1,6 @@
 ﻿namespace DatabaseDAL.PersistenceModel;
 
-internal class ReserveEntity
+public class ReserveEntity
 {
     public int StoreId { get; set; }
     public StoreEntity Store { get; set; } = null!;

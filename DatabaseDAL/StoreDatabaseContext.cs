@@ -3,16 +3,16 @@ using DatabaseDAL.PersistenceModel;
 
 namespace DatabaseDAL;
 
-
-internal class StoreDatabaseContext : DbContext
+public class StoreDatabaseContext : DbContext
 {
     public DbSet<StoreEntity> Stores { get; set; } = null!;
     public DbSet<ProductEntity> Products { get; set; } = null!;
     public DbSet<ReserveEntity> Reserves { get; set; } = null!;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public StoreDatabaseContext(DbContextOptions<StoreDatabaseContext> options)
+    : base(options)
     {
-        optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=StoreDatabase;Trusted_Connection=True;");
+        Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

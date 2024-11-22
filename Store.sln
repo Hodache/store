@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{99BC63B4-311E-492B-A324-3B109EF7260A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{99BC63B4-311E-492B-A324-3B109EF7260A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractServices", "AbstractServices\AbstractServices.csproj", "{076DBBBD-CC2B-4551-B9C0-39C221897192}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbstractServices", "AbstractServices\AbstractServices.csproj", "{076DBBBD-CC2B-4551-B9C0-39C221897192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractRepositories", "AbstractRepositories\AbstractRepositories.csproj", "{7974A213-41F5-44CD-AAAA-2F4879C1C984}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{7974A213-41F5-44CD-AAAA-2F4879C1C984}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwaggerClient", "SwaggerClient\SwaggerClient.csproj", "{B34677D3-A781-4AEF-8EE5-8129F60D217E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwaggerClient", "SwaggerClient\SwaggerClient.csproj", "{B34677D3-A781-4AEF-8EE5-8129F60D217E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilesDAL", "FilesDAL\FilesDAL.csproj", "{FDEC6D1E-69EA-490B-9DE4-ECD7F9224D66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilesDAL", "FilesDAL\FilesDAL.csproj", "{FDEC6D1E-69EA-490B-9DE4-ECD7F9224D66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseDAL", "DatabaseDAL\DatabaseDAL.csproj", "{10C5815C-EF23-498E-9270-D170EB678715}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseDAL", "DatabaseDAL\DatabaseDAL.csproj", "{10C5815C-EF23-498E-9270-D170EB678715}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryPoint", "EntryPoint\EntryPoint.csproj", "{CEB9AFF5-96AB-47D1-A2A2-A9FE49FEF1C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntryPoint", "EntryPoint\EntryPoint.csproj", "{CEB9AFF5-96AB-47D1-A2A2-A9FE49FEF1C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", "{BAEA4C44-EB70-46C6-8DB6-88CD5F8908CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{CEB9AFF5-96AB-47D1-A2A2-A9FE49FEF1C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEB9AFF5-96AB-47D1-A2A2-A9FE49FEF1C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEB9AFF5-96AB-47D1-A2A2-A9FE49FEF1C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAEA4C44-EB70-46C6-8DB6-88CD5F8908CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAEA4C44-EB70-46C6-8DB6-88CD5F8908CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAEA4C44-EB70-46C6-8DB6-88CD5F8908CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAEA4C44-EB70-46C6-8DB6-88CD5F8908CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

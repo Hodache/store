@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseDAL.Repositories;
 
-internal class ProductRepository : IProductRepository
+public class ProductRepository : IProductRepository
 {
     private readonly StoreDatabaseContext _context;
 

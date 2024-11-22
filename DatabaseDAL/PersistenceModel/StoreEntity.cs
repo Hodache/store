@@ -1,6 +1,6 @@
 ﻿namespace DatabaseDAL.PersistenceModel;
 
-internal class StoreEntity
+public class StoreEntity
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

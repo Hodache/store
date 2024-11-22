@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseDAL.Repositories;
 
-internal class ReserveRepository : IReserveRepository
+public class ReserveRepository : IReserveRepository
 {
     private readonly StoreDatabaseContext _context;
 

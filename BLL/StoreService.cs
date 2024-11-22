@@ -6,7 +6,7 @@ using System.Data;
 
 namespace BLL;
 
-internal class StoreService : IStoreService
+public class StoreService : IStoreService
 {
     private readonly IStoreRepository _storeRepository;
     private readonly IProductRepository _productRepository;
