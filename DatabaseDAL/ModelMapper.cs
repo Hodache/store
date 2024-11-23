@@ -37,8 +37,8 @@ namespace DatabaseDAL
         internal static Reserve ToDomain(ReserveEntity reserveEntity)
         {
             return new Reserve(
-                store: ToDomain(reserveEntity.Store),
-                product: ToDomain(reserveEntity.Product),
+                storeId: reserveEntity.StoreId,
+                productId: reserveEntity.ProductId,
                 quantity: reserveEntity.Quantity,
                 price: reserveEntity.Price
             );
@@ -48,8 +48,8 @@ namespace DatabaseDAL
         {
             return new ReserveEntity
             {
-                StoreId = reserve.Store.Id,
-                ProductId = reserve.Product.Id,
+                StoreId = reserve.StoreId,
+                ProductId = reserve.ProductId,
                 Quantity = reserve.Quantity,
                 Price = reserve.Price
             };

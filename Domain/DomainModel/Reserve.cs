@@ -1,9 +1,9 @@
 ﻿namespace Domain.DomainModel;
 
-public class Reserve(Store store, Product product, int quantity, decimal price)
+public class Reserve(int storeId, int productId, int quantity, decimal price)
 {
-    public Store Store { get; set; } = store;
-    public Product Product { get; set; } = product;
+    public int StoreId { get; set; } = storeId;
+    public int ProductId { get; set; } = productId;
     public int Quantity { get; set; } = quantity;
     public decimal Price { get; set; } = price;
 }

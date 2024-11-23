@@ -70,7 +70,7 @@ public class ReserveRepository : IReserveRepository
 
     public async Task UpdateReserveAsync(Reserve reserve)
     {
-        var reserveEntity = await _context.Reserves.FindAsync(reserve.Store.Id, reserve.Product.Id);
+        var reserveEntity = await _context.Reserves.FindAsync(reserve.StoreId, reserve.ProductId);
         reserveEntity.Quantity = reserve.Quantity;
         reserveEntity.Price = reserve.Price;
 

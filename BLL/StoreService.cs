@@ -63,20 +63,22 @@ public class StoreService : IStoreService
         foreach (var entry in reserveEntries)
         {
             var product = await _productRepository.GetProductByIdAsync(entry.ProductId);
-            if (product != null)
+            if (product == null)
             {
-                var reserve = await _reserveRepository.GetReserveAsync(store.Id, product.Id);
-                if (reserve == null)
-                {
-                    var newReserve = new Reserve(store, product, entry.Quantity, entry.Price);
-                    await _reserveRepository.AddReserveAsync(newReserve);
-                }
-                else
-                {
-                    reserve.Quantity += entry.Quantity;
-                    reserve.Price = entry.Price;
-                    await _reserveRepository.UpdateReserveAsync(reserve);
-                }
+                throw new ArgumentException("Product not found");
+            }
+
+            var reserve = await _reserveRepository.GetReserveAsync(store.Id, entry.ProductId);
+            if (reserve == null)
+            {
+                var newReserve = new Reserve(storeId, entry.ProductId, entry.Quantity, entry.Price);
+                await _reserveRepository.AddReserveAsync(newReserve);
+            }
+            else
+            {
+                reserve.Quantity += entry.Quantity;
+                reserve.Price = entry.Price;
+                await _reserveRepository.UpdateReserveAsync(reserve);
             }
         }
     }
@@ -97,10 +99,11 @@ public class StoreService : IStoreService
         }
 
         var cheapestReserve = reserves.OrderBy(r => r.Price).First();
+        var store = await _storeRepository.GetStoreByIdAsync(cheapestReserve.StoreId);
         return new CheapestStoreDto
         {
-            StoreId = cheapestReserve.Store.Id,
-            StoreName = cheapestReserve.Store.Name,
+            StoreId = cheapestReserve.StoreId,
+            StoreName = store.Name,
             Price = cheapestReserve.Price
         };
     }
@@ -132,10 +135,12 @@ public class StoreService : IStoreService
             var quantity = (int)(budget / reserve.Price);
             if (quantity > 0)
             {
+                var product = await _productRepository.GetProductByIdAsync(reserve.ProductId);
+
                 purchaseOptions.Add(new PurchaseOptionDto
                 {
-                    ProductId = reserve.Product.Id,
-                    ProductName = reserve.Product.Name,
+                    ProductId = reserve.ProductId,
+                    ProductName = product.Name,
                     Quantity = Math.Min(quantity, reserve.Quantity)
                 });
             }
@@ -231,6 +236,17 @@ public class StoreService : IStoreService
         }
 
         var minPrice = storesTotal.OrderBy(s => s.Value).First();
+
+        if (minPrice.Value == decimal.MaxValue)
+        {
+            return new CheapestStoreDto
+            {
+                StoreId = -1,
+                StoreName = "No matching store",
+                Price = 0
+            };
+        }
+
         var cheapestStore = stores.First(s => s.Id == minPrice.Key);
 
         return new CheapestStoreDto
@@ -265,42 +281,50 @@ public class StoreService : IStoreService
     public async Task<List<ReserveDto>> GetAllReserves()
     {
         var reserves = await _reserveRepository.GetAllReservesAsync();
-        return reserves.Select(r => new ReserveDto
-        {
-            StoreId = r.Store.Id,
-            StoreName = r.Store.Name,
-            ProductId = r.Product.Id,
-            ProductName = r.Product.Name,
-            Quantity = r.Quantity,
-            Price = r.Price
-        }).ToList();
+
+        var result = await AttachStoreAndProductToReserves(reserves);
+
+        return result;
     }
 
     public async Task<List<ReserveDto>> GetReservesByStoreId(int storeId)
     {
         var reserves = await _reserveRepository.GetReservesByStoreIdAsync(storeId);
-        return reserves.Select(r => new ReserveDto
-        {
-            StoreId = r.Store.Id,
-            StoreName = r.Store.Name,
-            ProductId = r.Product.Id,
-            ProductName = r.Product.Name,
-            Quantity = r.Quantity,
-            Price = r.Price
-        }).ToList();
+
+        var result = await AttachStoreAndProductToReserves(reserves);
+
+        return result;
     }
 
     public async Task<List<ReserveDto>> GetReservesByProductId(int productId)
     {
         var reserves = await _reserveRepository.GetReservesByProductIdAsync(productId);
-        return reserves.Select(r => new ReserveDto
+
+        var result = await AttachStoreAndProductToReserves(reserves);
+
+        return result;
+    }
+
+    private async Task<List<ReserveDto>> AttachStoreAndProductToReserves(IEnumerable<Reserve> reserves)
+    {
+        List<ReserveDto> result = [];
+        foreach (var r in reserves)
         {
-            StoreId = r.Store.Id,
-            StoreName = r.Store.Name,
-            ProductId = r.Product.Id,
-            ProductName = r.Product.Name,
-            Quantity = r.Quantity,
-            Price = r.Price
-        }).ToList();
+            var store = await _storeRepository.GetStoreByIdAsync(r.StoreId);
+            var product = await _productRepository.GetProductByIdAsync(r.ProductId);
+
+            result.Add(
+                new ReserveDto
+                {
+                    StoreId = r.StoreId,
+                    StoreName = store.Name,
+                    ProductId = r.ProductId,
+                    ProductName = product.Name,
+                    Quantity = r.Quantity,
+                    Price = r.Price
+                });
+        }
+
+        return result;
     }
 }

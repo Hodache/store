@@ -8,6 +8,7 @@ using SwaggerClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using DatabaseDAL;
+using FilesDAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,13 +18,30 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Controllers).Assembl
 
 builder.Services.AddScoped<IStoreService, StoreService>();
 
-string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<StoreDatabaseContext>(options =>
-    options.UseSqlServer(connection));
+var dalType = builder.Configuration["DalType"];
 
-builder.Services.AddScoped<IStoreRepository, StoreRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IReserveRepository, ReserveRepository>();
+if (dalType == "Database")
+{
+    string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<StoreDatabaseContext>(options =>
+        options.UseSqlServer(connection));
+
+    builder.Services.AddScoped<IStoreRepository, StoreRepository>();
+    builder.Services.AddScoped<IProductRepository, ProductRepository>();
+    builder.Services.AddScoped<IReserveRepository, ReserveRepository>();
+} 
+else if (dalType == "Csv")
+{
+    var csvPaths = builder.Configuration.GetSection("CsvPaths");
+
+    var storesPath = csvPaths["Stores"];
+    var productsPath = csvPaths["Products"];
+    var reservesPath = csvPaths["Reserves"];
+
+    builder.Services.AddScoped<IStoreRepository>(provider => new StoreCsvRepository(storesPath));
+    builder.Services.AddScoped<IProductRepository>(provider => new ProductCsvRepository(productsPath));
+    builder.Services.AddScoped<IReserveRepository>(provider => new ReserveCsvRepository(reservesPath));
+}
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
