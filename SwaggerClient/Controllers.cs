@@ -16,14 +16,14 @@ public class Controllers : ControllerBase
     }
 
     [HttpPost("create-store")]
-    public async Task<IActionResult> CreateStore([FromBody] StoreDto storeDto)
+    public async Task<IActionResult> CreateStore([FromBody] CreateStoreDto storeDto)
     {
         await _storeService.CreateStore(storeDto);
         return Ok();
     }
 
     [HttpPost("create-product")]
-    public async Task<IActionResult> CreateProduct([FromBody] ProductDto productDto)
+    public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto productDto)
     {
         await _storeService.CreateProduct(productDto);
         return Ok();
@@ -57,10 +57,45 @@ public class Controllers : ControllerBase
         return Ok(purchaseResult);
     }
 
-    [HttpGet("cheapest-store-for-bundle")]
-    public async Task<IActionResult> FindCheapestStoreForBundle([FromBody] List<ReserveEntryDto> productBundle)
+    [HttpPost("cheapest-store-for-bundle")]
+    public async Task<IActionResult> FindCheapestStoreForBundle([FromBody] List<PurchaseDto> productBundle)
     {
         var cheapestStore = await _storeService.FindCheapestStoreForBundle(productBundle);
         return Ok(cheapestStore);
+    }
+
+    [HttpGet("stores")]
+    public async Task<IActionResult> GetAllStores()
+    {
+        var stores = await _storeService.GetAllStores();
+        return Ok(stores);
+    }
+
+    [HttpGet("products")]
+    public async Task<IActionResult> GetAllProducts()
+    {
+        var products = await _storeService.GetAllProducts();
+        return Ok(products);
+    }
+
+    [HttpGet("reserves")]
+    public async Task<IActionResult> GetAllReserves()
+    {
+        var reserves = await _storeService.GetAllReserves();
+        return Ok(reserves);
+    }
+
+    [HttpGet("reserves-by-store")]
+    public async Task<IActionResult> GetReservesByStoreId(int storeId)
+    {
+        var reserves = await _storeService.GetReservesByStoreId(storeId);
+        return Ok(reserves);
+    }
+
+    [HttpGet("reserves-by-product")]
+    public async Task<IActionResult> GetReservesByProductId(int productId)
+    {
+        var reserves = await _storeService.GetReservesByProductId(productId);
+        return Ok(reserves);
     }
 }
